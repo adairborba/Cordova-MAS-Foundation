@@ -11,4 +11,4 @@
     android:accountType="com.mas.foundation.sharedstorage"
     android:label="@string/acc_name"
     android:icon="@drawable/ca"
-    android:smallIcon="@drawable/ca"/
+    android:smallIcon="@drawable/ca"/>
