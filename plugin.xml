@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-mas-core-mba"
-      version="1.9.10">
+      version="1.9.13">
     <name>MAS</name>
     <description>Cordova MAS Plugin</description>
     <license>CA Technologies Ltd.</license>
@@ -141,7 +141,9 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
             <uses-permission android:name="android.permission.GET_ACCOUNTS" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        </config-file>
 
+        <config-file target="AndroidManifest.xml" parent="./application" >
             <service
                 android:name="com.ca.mas.core.storage.sharedstorage.MASAuthenticatorService"
                 android:exported="false">
@@ -151,10 +153,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
                 <meta-data
                     android:name="account.name"
-                    android:resource="@string/<account_name>" />
+                    android:resource="@string/acc_name" />
                 <meta-data
                     android:name="android.accounts.AccountAuthenticator"
-                    android:resource="@xml/<account_authenticator_name>" />
+                    android:resource="@xml/authenticator" />
             </service>
         </config-file>
 

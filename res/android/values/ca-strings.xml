@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="acc_name">Your Account Name</string>
+    <string name="acc_name">MAS Cordova</string>
 </resources>
