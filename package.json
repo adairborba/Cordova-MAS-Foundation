@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-mas-core",
-  "version": "1.9.10",
+  "name": "cordova-plugin-mas-core-mba",
+  "version": "1.9.11",
   "description": "Cordova MAS Foundation Plugin",
   "cordova": {
-    "id": "cordova-plugin-mas-core",
+    "id": "cordova-plugin-mas-core-mba",
     "platforms": [
       "ios",
       "android"
@@ -19,7 +19,8 @@
     "CA Technologies",
     "ecosystem:cordova",
     "cordova-ios",
-    "cordova-android"
+    "cordova-android",
+    "MBA"
   ],
   "author": "CA Technologies Ltd.",
   "license": "CA Technologies Ltd.",

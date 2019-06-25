@@ -120,7 +120,7 @@ MASPlugin.MASUser.currentUser(function(currentUser) {
 ### New features
 - Exposed API to get accessToken in MASPluginUser.
 - Exposed API for loginWithIdToken in MASPluginUser.
-- Now available as npm package "cordova-plugin-mas-core".
+- Now available as npm package "cordova-plugin-mas-core-mba".
 
 ### Deprecated methods
 - None.

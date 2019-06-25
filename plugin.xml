@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-           id="cordova-plugin-mas-core"
+           id="cordova-plugin-mas-core-mba"
       version="1.9.10">
     <name>MAS</name>
     <description>Cordova MAS Plugin</description>
@@ -138,11 +138,29 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
             <uses-permission android:name="android.permission.NFC" />
-           <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+            <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
             <uses-permission android:name="android.permission.GET_ACCOUNTS" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+            <service
+                android:name="com.ca.mas.core.storage.sharedstorage.MASAuthenticatorService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="android.accounts.AccountAuthenticator" />
+                </intent-filter>
+
+                <meta-data
+                    android:name="account.name"
+                    android:resource="@string/<account_name>" />
+                <meta-data
+                    android:name="android.accounts.AccountAuthenticator"
+                    android:resource="@xml/<account_authenticator_name>" />
+            </service>
         </config-file>
 
+        <source-file src="src/android/res/xml/authenticator.xml" target-dir="res/xml"/>
+        <source-file src="src/android/res/values/ca-strings.xml" target-dir="res/values"/>
+    
         <framework src="com.ca:mas:1.9.10" />
         <framework src="com.ca:masui:1.9.10" />
         
