@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-mas-core-mba"
-      version="1.9.14">
+      version="1.9.15">
     <name>MAS</name>
     <description>Cordova MAS Plugin</description>
     <license>CA Technologies Ltd.</license>
@@ -109,8 +109,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <source-file src="src/ios/WebViewController.m" />
         <resource-file src="src/ios/EnterpriseBrowser.storyboard" />
 
-        <framework src="MASFoundation" type="podspec" spec="~> 1.9.10" />
-        <framework src="MASUI" type="podspec" spec="~> 1.9.10" />
+        <!-- <framework src="MASFoundation" type="podspec" spec="~> 1.9.10" />
+        <framework src="MASUI" type="podspec" spec="~> 1.9.10" /> -->
+        <framework src="MASFoundation" type="podspec" spec="~> 1.9.00" />
+        <framework src="MASUI" type="podspec" spec="~> 1.9.00" />
         <hook type="before_plugin_uninstall" src="scripts/MASBeforePluginRemoveIos.js" />
 
     </platform>
