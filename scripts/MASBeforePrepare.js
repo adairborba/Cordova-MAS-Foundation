@@ -6,16 +6,21 @@ var fs = require('fs'),
 
 module.exports = function (context) {
 
+    var env = '';
+    if (fs.existsSync('./src/app/env')) {
+        env = fs.readFileSync('./src/app/env');
+        console.log('ENV =>' + env );
+    }
+    
     var path = require('os').homedir() + '/masconfig/msso_config.json';
     var iOSConfigPath = process.cwd() + '/platforms/ios/msso_config.json';
 
-    // Abort if the msso config path doesn't exist...
-    if (!fs.existsSync(path)) {
-
-        throw '\n' + 'Config file does not exist @ path : ' + path + '\n';
-    }
-
     if (fs.existsSync('platforms/ios/ios.json')) {
+
+        if (env !== '') {
+            path = `./resources/msso/msso_config_ios_${env}.json`;
+            console.log('MSSO Config iOS =>' + path );
+        }
 
         fs.writeFileSync(iOSConfigPath, fs.readFileSync(path));
 
@@ -83,6 +88,17 @@ module.exports = function (context) {
     }
 
     if (fs.existsSync('platforms/android/android.json')) {
+
+        if (env !== '') {
+            path = `./resources/msso/msso_config_android_${env}.json`;
+            console.log('MSSO Config Android =>' + path );
+        }
+
+        // Abort if the msso config path doesn't exist...
+        if (!fs.existsSync(path)) {
+            throw '\n' + 'Config file does not exist @ path : ' + path + '\n';
+        }
+
         if (fs.existsSync('platforms/android/app/src/main/assets/')) {
             fs.createReadStream(path).pipe(fs.createWriteStream('platforms/android/app/src/main/assets/msso_config.json'));
         } else {
