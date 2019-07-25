@@ -1,0 +1,8 @@
+dependencies {
+    compile ('com.ca:mas:1.9.10') {
+        exclude group: 'com.google.zxing', module: 'core'
+    }
+    compile ('com.ca:masui:1.9.10') {
+        exclude group: 'com.google.zxing', module: 'core'
+    }
+}

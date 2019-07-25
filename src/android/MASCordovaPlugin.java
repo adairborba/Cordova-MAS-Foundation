@@ -39,6 +39,7 @@ public class MASCordovaPlugin extends CordovaPlugin {
      */
     protected JSONObject getError(Throwable error) {
         String rootCauseErrorMessage = null;
+
         if (error instanceof MASException) {
             if (((MASException) error).getRootCause() != null) {
                 rootCauseErrorMessage = ((MASException) error).getRootCause().getMessage();
@@ -50,12 +51,15 @@ public class MASCordovaPlugin extends CordovaPlugin {
     protected JSONObject getError(Throwable throwable, String rootCauseErrorMessage) {
         int errorCode = MAGErrorCode.UNKNOWN;
         String errorMessage = throwable.getMessage();
+        Integer code = 0;
+        String data = "";
 
         //Try to capture the root cause of the error
         if (throwable instanceof MAGException) {
             MAGException ex = (MAGException) throwable;
             errorCode = ex.getErrorCode();
             errorMessage = ex.getMessage();
+
         } else if (throwable instanceof MAGRuntimeException) {
             MAGRuntimeException ex = (MAGRuntimeException) throwable;
             errorCode = ex.getErrorCode();
@@ -85,6 +89,10 @@ public class MASCordovaPlugin extends CordovaPlugin {
             } catch (Exception ignore) {
             }
             errorMessage = e.getResponse() != null ? e.getResponse().getResponseMessage() : e.getMessage();
+
+            code = e.getResponse().getResponseCode();
+            data = new String(e.getResponse().getBody().getRawContent());
+
         } else if (throwable != null && throwable instanceof MASCordovaException) {
             errorMessage = throwable.getMessage();
             if (throwable.getCause() != null) {
@@ -104,6 +112,9 @@ public class MASCordovaPlugin extends CordovaPlugin {
                 throwable.printStackTrace(new PrintWriter(errors));
             }
             error.put("errorInfo", rootCauseErrorMessage != null ? rootCauseErrorMessage : errors.toString());
+
+            error.put("code", code);
+            error.put("data", data);
         } catch (Throwable ignore) {
         }
         return error;
