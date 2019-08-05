@@ -776,7 +776,7 @@
             // is public server
             //
             if ([command.arguments objectAtIndex:5] && [command.arguments objectAtIndex:5] != [NSNull null]) {
-                isPublic = ([[command.arguments objectAtIndex:5] isEqualToString:@"true"])? YES : NO;
+                isPublic = [command.arguments objectAtIndex:5];
             }
             
             [MAS getFrom:path
@@ -897,7 +897,7 @@
             // is public server
             //
             if ([command.arguments objectAtIndex:5] && [command.arguments objectAtIndex:5] != [NSNull null]) {
-                isPublic = ([[command.arguments objectAtIndex:5] isEqualToString:@"true"])? YES : NO;
+                isPublic = [command.arguments objectAtIndex:5];
             }
             
             [MAS deleteFrom:path
@@ -1018,7 +1018,7 @@
             //
             //
             if ([command.arguments objectAtIndex:5] && [command.arguments objectAtIndex:5] != [NSNull null]) {
-                isPublic = ([[command.arguments objectAtIndex:5] isEqualToString:@"true"])? YES : NO;
+                isPublic = [command.arguments objectAtIndex:5];
             }
             
             [MAS postTo:path
@@ -1139,7 +1139,7 @@
             // is public server
             //
             if ([command.arguments objectAtIndex:5] && [command.arguments objectAtIndex:5] != [NSNull null]) {
-                isPublic = ([[command.arguments objectAtIndex:5] isEqualToString:@"true"])? YES : NO;
+                isPublic = [command.arguments objectAtIndex:5];
             }
             
             [MAS putTo:path
@@ -1260,7 +1260,7 @@
             // is public server
             //
             if ([command.arguments objectAtIndex:5] && [command.arguments objectAtIndex:5] != [NSNull null]) {
-                isPublic = ([[command.arguments objectAtIndex:5] isEqualToString:@"true"])? YES : NO;
+                isPublic = [command.arguments objectAtIndex:5];
             }
             
             [MAS patchTo:path
