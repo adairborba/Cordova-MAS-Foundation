@@ -1,20 +1,3 @@
-# Version 2.0.00
-
-### Bug fixes
-- None
-
-### New features
-- Decoupling the Proximity login feature in Cordova in accordance with Native iOS SDK [US587011]
-- Intermediate Certificate Pinning-Implementation Cordova-iOS [US600504]
-- iOS - Podspec entry instead of framework tag in plugin.xml [US604884]
-- Multipart Form data support (Usage: File Upload) [US605856]
-
-### Deprecated methods
-- None
-
-### Removed methods
-- None
-
 # Version 1.9.10
 
 ### Bug fixes
@@ -173,8 +156,9 @@ MASPlugin.MASUser.currentUser(function(currentUser) {
 
 
  [mag]: https://docops.ca.com/mag
- [techdocs.broadcom.com]: http://techdocs.broadcom.com/content/broadcom/techdocs/us/en/ca-enterprise-software/layer7-api-management/mobile-sdk-for-ca-mobile-api-gateway/2-0.html
- [docs]: http://techdocs.broadcom.com/content/broadcom/techdocs/us/en/ca-enterprise-software/layer7-api-management/mobile-sdk-for-ca-mobile-api-gateway/2-0.html
+ [mas.ca.com]: http://mas.ca.com/
+ [docs]: http://mas.ca.com/docs/
+ [blog]: http://mas.ca.com/blog/
 
  [releases]: ../../releases
  [contributing]: /CONTRIBUTING.md
