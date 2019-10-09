@@ -37,7 +37,7 @@ static MASPluginAuthenticationController *_sharedAuthController = nil;
     @property (nonatomic, copy) NSString *availableProvider;
     @property (nonatomic, strong) MASAuthenticationProvider *qrCodeProvider;
     
-    @property (nonatomic, strong) id qrCode;
+    @property (nonatomic, strong) MASProximityLoginQRCode *qrCode;
     
     @property (nonatomic, strong) NSString *callbackId;
     
@@ -104,41 +104,17 @@ static MASPluginAuthenticationController *_sharedAuthController = nil;
         self.qrCodeProvider = qrCodeAuthenticationProvider;
         self.availableProvider = providers.idp;
         
-        IMP imp;
-        SEL selector;
         NSString *qrCodeImageBase64;
         if (_qrCodeProvider)
         {
-            if (_qrCode == nil) {
+            [[MASDevice currentDevice] startAsBluetoothCentralWithAuthenticationProvider:_qrCodeProvider];
+            
+            if (_qrCode == nil)
+            {
+                _qrCode = [[MASProximityLoginQRCode alloc] initWithAuthenticationProvider:_qrCodeProvider];
                 
-                Class MASProximityLoginQRCodeClass = [NSClassFromString(@"MASProximityLoginQRCode") class];
-                if (MASProximityLoginQRCodeClass != nil) {
-                    
-                    _qrCode = [MASProximityLoginQRCodeClass alloc];
-                    
-                    selector = NSSelectorFromString(@"initWithAuthenticationProvider:");
-                    if([_qrCode respondsToSelector:selector])
-                    {
-                        imp = [_qrCode methodForSelector:selector];
-                        __block id (*initWithAuthenticationProvider)(id, SEL, MASAuthenticationProvider*) = (void *)imp;
-                        
-                        //
-                        // Attempt to retrieve the Proximity Login QRCode
-                        //
-                        _qrCode =  initWithAuthenticationProvider(_qrCode, selector, _qrCodeProvider);
-                    }
-                    
-                    selector = NSSelectorFromString(@"startDisplayingQRCodeImageForProximityLogin");
-                    if ([_qrCode respondsToSelector:selector]) {
-                        
-                        imp = [_qrCode methodForSelector:selector];
-                        __block id (*startDisplayingQRCodeImageForProximityLogin)(id, SEL) = (void *)imp;
-                        
-                        id qrCodeImage = startDisplayingQRCodeImageForProximityLogin(_qrCode, selector);
-                        
-                        qrCodeImageBase64 = [UIImagePNGRepresentation((UIImage *)qrCodeImage) base64EncodedStringWithOptions:0];
-                    }
-                }
+                UIImage *qrCodeImage = [_qrCode startDisplayingQRCodeImageForProximityLogin];
+                qrCodeImageBase64 = [UIImagePNGRepresentation(qrCodeImage) base64EncodedStringWithOptions:0];
             }
         }
         
@@ -224,6 +200,7 @@ static MASPluginAuthenticationController *_sharedAuthController = nil;
         //
         // Remove the QR code block
         //
+        
         if (self.removeQRCodeBlock) {
             
             self.removeQRCodeBlock(YES, nil);
@@ -237,8 +214,8 @@ static MASPluginAuthenticationController *_sharedAuthController = nil;
     //
     // Stop displaying QR code
     //
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:self
                                   name:MASDeviceDidReceiveAuthorizationCodeFromProximityLoginNotification
                                 object:nil];
@@ -249,16 +226,9 @@ static MASPluginAuthenticationController *_sharedAuthController = nil;
     
     if (_qrCode) {
         
-        SEL selector = NSSelectorFromString(@"stopDisplayingQRCodeImageForProximityLogin");
-        if ([_qrCode respondsToSelector:selector]) {
-            
-            IMP imp = [_qrCode methodForSelector:selector];
-            
-            __block void (*stopDisplayingQRCodeImageForProximityLogin)(id, SEL) = (void *)imp;
-            
-            stopDisplayingQRCodeImageForProximityLogin(_qrCode, selector);
-            _qrCode = nil;
-        }
+        [_qrCode stopDisplayingQRCodeImageForProximityLogin];
+        
+        _qrCode = nil;
     }
 }
     
@@ -267,29 +237,8 @@ static MASPluginAuthenticationController *_sharedAuthController = nil;
     //
     // Authorize the QR code
     //
-    Class proximityLoginQRCodeClass = NSClassFromString(@"MASProximityLoginQRCode");
-    if (proximityLoginQRCodeClass != nil) {
-        
-        SEL selector = NSSelectorFromString(@"authorizeAuthenticateUrl:completion:");;
-        if ([proximityLoginQRCodeClass respondsToSelector:selector]) {
-            
-            IMP imp = [proximityLoginQRCodeClass methodForSelector:selector];
-            __block void (*authorizeAuthenticateUrl)(id, SEL, NSString*, MASCompletionErrorBlock) = (void *)imp;
-            authorizeAuthenticateUrl([_qrCode class], selector, code, completion);
-        }
-    }
-    else {
-        
-        if (completion) {
-            
-            NSMutableDictionary *errorInfo = [NSMutableDictionary new];
-            errorInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Proximity login feature unavailable.",
-                                                                     @"Proximity login feature unavailable.");
-            NSError *error = [NSError errorWithDomain:MASFoundationErrorDomain
-                                                 code:MASFoundationErrorCodeUnknown userInfo:errorInfo];
-            completion(NO, error);
-        }
-    }
+    
+    [MASProximityLoginQRCode authorizeAuthenticateUrl:code completion:completion];
 }
     
     
