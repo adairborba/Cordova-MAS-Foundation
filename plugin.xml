@@ -111,8 +111,8 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
         <!-- <framework src="MASFoundation" type="podspec" spec="~> 1.9.10" />
         <framework src="MASUI" type="podspec" spec="~> 1.9.10" /> -->
-        <framework src="MASFoundation" type="podspec" spec="~> 1.9.00" />
-        <framework src="MASUI" type="podspec" spec="~> 1.9.00" />
+        <framework src="MASFoundation" type="podspec" spec="~> 1.9.20" />
+        <framework src="MASUI" type="podspec" spec="~> 1.9.20" />
         <hook type="before_plugin_uninstall" src="scripts/MASBeforePluginRemoveIos.js" />
 
     </platform>
@@ -165,8 +165,8 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <source-file src="res/android/xml/authenticator.xml" target-dir="res/xml"/>
         <source-file src="res/android/values/ca-strings.xml" target-dir="res/values"/>
     
-        <!-- <framework src="com.ca:mas:1.9.10" />
-        <framework src="com.ca:masui:1.9.10" /> -->
+        <framework src="com.ca:mas:1.9.20" />
+        <framework src="com.ca:masui:1.9.20" />
         
         <source-file src="src/android/MASPluginMAS.java" target-dir="src/com/ca/mas/cordova/core" />
 		<source-file src="src/android/MASPluginUser.java" target-dir="src/com/ca/mas/cordova/core" />
